@@ -10,13 +10,70 @@
 
 ## 变量
 
+### 赋值与声明
+
 CMake中变量都是赋值于声明一体，与Python一致
 
-CMake中变量都是字符串类型，但是CMake会根据字符串内容对他们进行分类
+```cmake
+set(SRC add.c;sub.c;main.c) #声明变量并赋值
+#set(SRC add.c sub.c main.c) #声明列表也可以用空格分开
+add_executable(app ${SRC}) #使用变量
+```
 
-``````
+### 类型
 
-``````
+CMake没有类型，所有变量都是字符串，但是可以归为一下几类，CMake对他们的处理方式也不一样
+
+- 基本字符串
+
+- 布尔值
+
+  有`Y` `N` `1` `0` `TRUE` `FALSE` `ON` `OFF` `YES` `NO`，这些字符串在CMake中会被解析成布尔类型
+
+- 列表
+
+  列表实际上就是以分号分隔的字符串`item1;item2;item3`
+
+- 路径
+
+- 环境变量
+
+  环境变量通过字符串表示，使用`$ENV{XXX}`来访问
+
+- 缓存
+
+  通过`set`中的`CACHE`选项来设置
+
+```cmake
+cmake_minimum_required(VERSION 3.10)
+
+# 设置字符串变量
+set(MY_STRING "Hello, World!")
+message(STATUS "String: ${MY_STRING}")
+
+# 设置布尔变量
+set(MY_BOOL ON)
+if(MY_BOOL)
+  message(STATUS "Boolean: MY_BOOL is true")
+endif()
+
+# 设置列表变量
+set(MY_LIST "item1;item2;item3")
+foreach(item IN LISTS MY_LIST)
+  message(STATUS "List item: ${item}")
+endforeach()
+
+# 设置路径变量
+set(MY_PATH "/usr/local/bin")
+message(STATUS "Path: ${MY_PATH}")
+
+# 设置环境变量
+message(STATUS "PATH environment variable: $ENV{PATH}")
+
+# 设置缓存变量
+set(MY_CACHE_VAR "default_value" CACHE STRING "This is a cache variable")
+message(STATUS "Cache variable: ${MY_CACHE_VAR}")
+```
 
 ## 条件分支与循环
 
