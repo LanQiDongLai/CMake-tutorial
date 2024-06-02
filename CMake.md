@@ -272,6 +272,24 @@ add_library(calc STATIC calc.c add.c sub.c div.c mult.c)
 add_library(calc SHARED calc.c add.c sub.c div.c mult.c)
 ```
 
+### 查找包
+
+```cmake
+# 查找Boost库，要求版本1.75以上，包含组件filesystem和system
+find_package(Boost 1.75 REQUIRED COMPONENTS filesystem system)
+```
+
+原型：```find_package(<PackageName> [version] [REQUIRED] [COMPONENTS components...] [OPTIONAL_COMPONENTS components...])```
+
+当执行改命令之后，find_package会生成如下变量
+
+- `<package_name>_FOUND` 是否找到包，结果为TRUE或FALSE
+- `<package_name>_INCLUDE_DIR` 包的包含路径
+- `<package_name>_LIBRARY` 包的库路径
+- `<package_name>_<component_name>_FOUND` 是否找到包的组件，结果为TRUE或FALSE
+- `<package_name>_<component_name>_INCLUDE_DIR` 包的组件的包含路径
+- `<package_name>_<component_name>_LIBRARY` 包的组件的库路径
+
 ## 内置变量
 
 - LIBRARY_OUTPUT_PATH：库目录输出路径
